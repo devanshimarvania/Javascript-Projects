@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Travel Planner</title>
+</head>
+
+<body>
+  <script>
+
+    let travelDestinations = [];
+    let totalDestinations;
+
+    do {
+      totalDestinations = parseInt(prompt("How many destinati ons you want to visit (3-5):"));
+      if (isNaN(totalDestinations) || totalDestinations < 3 || totalDestinations > 5) {
+        alert("⚠️ Please enter a valid number between 3 and 5.");
+      }
+    } while (isNaN(totalDestinations) || totalDestinations < 3 || totalDestinations > 5);
+
+    for (let i = 0; i < totalDestinations; i++) {
+      let destinationName;
+      do {
+        destinationName = prompt(`Enter Destination ${i + 1} (letters only):`);
+        if (!/^[a-zA-Z\s]+$/.test(destinationName)) {
+          alert("❌ Invalid! Use letters only (A-Z).");
+          destinationName = null;
+        }
+      } while (!destinationName);
+      travelDestinations.push(destinationName);
+    }
+
+    let totalBudget;
+    do {
+      totalBudget = parseInt(prompt("Enter your travel budget (minimum 1000):"));
+      if (isNaN(totalBudget) || totalBudget < 1000) {
+        alert("⚠️ Please enter a valid budget (1000 or more).");
+      }
+    } while (isNaN(totalBudget) || totalBudget < 1000);
+
+    let tripCategory = "";
+    if (totalBudget < 10000) {
+      tripCategory = "🚌 Plan a short domestic trip.";
+    }
+    else if (totalBudget <= 50000) {
+      tripCategory = "🚆 You can plan a long domestic trip.";
+    }
+    else {
+      tripCategory = "🌍 International trip possible!";
+    }
+
+    let travelDays;
+    do {
+      travelDays = parseInt(prompt("How many days you want to plan (1-100):"));
+      if (isNaN(travelDays) || travelDays < 1 || travelDays > 100) {
+        alert("⚠️ Please enter a valid number of days (1-100).");
+      }
+    } while (isNaN(travelDays) || travelDays < 1 || travelDays > 100);
+
+    let tripDurationType = "";
+    if (travelDays < 3) {
+      tripDurationType = "⏳ Weekend Getaway.";
+    }
+    else if (travelDays <= 7) {
+      tripDurationType = "🏖️ Perfect Holiday Trip.";
+    }
+    else {
+      tripDurationType = "🗓️ Extended Vacation.";
+    }
+
+    const getHotelSuggestion = (budget, days) => {
+      let budgetPerDay = budget / days;
+      if (budgetPerDay < 2000) {
+        return "🏨 Budget Hotels.";
+      }
+      else if (budgetPerDay <= 5000) {
+        return "🏨 Mid-range Hotels.";
+      }
+      else {
+        return "🏨 Luxury Hotels.";
+      }
+    };
+
+    let hotelRecommendation = getHotelSuggestion(totalBudget, travelDays);
+
+    // Console Output
+    console.log("=== 📝 Final Travel Summary ===");
+    console.log(`🌍 Destinations Entered: ${travelDestinations.join(", ")}`);
+    console.log(`💰 Total Budget: ₹${totalBudget}`);
+    console.log(`📅 Days Planned: ${travelDays}`);
+    console.log(`⏳ Trip Duration: ${tripDurationType}`);
+    console.log(`✈️ Trip Type: ${tripCategory}`);
+    console.log(`🏨 Hotel Suggestion: ${hotelRecommendation}`);
+    console.log("🎉 Travel Summary: Enjoy your trip with comfort! 🎉");
+
+    // Document Output
+    document.write("<h2>=== 📝 Final Travel Summary ===</h2>");
+    document.write(`<p>🌍 <b>Destinations Entered:</b> ${travelDestinations.join(", ")}</p>`);
+    document.write(`<p>💰 <b>Total Budget:</b> ₹${totalBudget}</p>`);
+    document.write(`<p>📅 <b>Days Planned:</b> ${travelDays}</p>`);
+    document.write(`<p>⏳ <b>Trip Duration:</b> ${tripDurationType}</p>`);
+    document.write(`<p>✈️ <b>Trip Type:</b> ${tripCategory}</p>`);
+    document.write(`<p>🏨 <b>Hotel Suggestion:</b> ${hotelRecommendation}</p>`);
+    document.write("<h3>🎉 Travel Summary: Enjoy your trip with comfort! 🎉</h3>");
+  </script>
+</body>
+
+</html>
