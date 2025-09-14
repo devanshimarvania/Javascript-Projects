@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown & Motivation App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #2c5364);
+            color: white;
+        }
+
+        .timer-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .timer-display {
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            font-size: 26px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #00eaff;
+            background: white;
+            box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            width: 140px;
+            height: 50px;
+            margin: 10px;
+            font-size: 17px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .quote-box {
+            max-width: 600px;
+            font-size: 20px;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-btn {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+        }
+
+        .prev-quote {
+            left: 25%;
+            bottom: 18%;
+        }
+
+        .next-quote {
+            right: 25%;
+            bottom: 18%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="timer-box">
+        <div class="timer-display" id="countdown"></div>
+        <button class="btn" onclick="startTimer()">Start</button>
+        <button class="btn" onclick="pauseTimer()">Pause</button>
+    </div>
+
+    <div class="quote-box" id="quoteText"></div>
+    <button class="nav-btn prev-quote" onclick="prevQuote()"><i class="fa-solid fa-angle-left"></i></button>
+    <button class="nav-btn next-quote" onclick="nextQuote()"><i class="fa-solid fa-angle-right"></i></button>
+
+    <script>
+        // Countdown Timer
+        let d = 10, h = 5, m = 20, s = 45;
+        let countdownTimer = null;
+        const countdownEl = document.getElementById("countdown");
+
+        countdownEl.innerHTML = `${d}d : ${h}h : ${m}m : ${s}s`;
+
+        function startTimer() {
+            if (countdownTimer !== null) return;
+
+            countdownTimer = setInterval(() => {
+                s--;
+
+                if (s < 0) {
+                    s = 59;
+                    m--;
+                };
+                if (m < 0) {
+                    m = 59;
+                    h--;
+                };
+                if (h < 0) {
+                    h = 23;
+                    d--;
+                };
+
+                if (d === 0 && h === 0 && m === 0 && s === 0) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                    countdownEl.innerHTML = "⏰ Time’s Up!";
+                    return;
+                }
+
+                countdownEl.innerHTML = `${d}d : ${h}h : ${m}m : ${s}s`;
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(countdownTimer);
+            countdownTimer = null;
+        }
+
+        // Quotes Slider
+        let currentQuote = 0;
+        const quoteArr = [
+            "Dreams don’t work unless you do.",
+            "Discipline is the bridge between goals and achievement.",
+            "Your only limit is your mind.",
+            "Don’t stop when you’re tired. Stop when you’re done.",
+            "Success is the sum of small efforts, repeated day in and day out."
+        ];
+        const quoteEl = document.getElementById("quoteText");
+
+        quoteEl.innerHTML = quoteArr[currentQuote];
+
+        setInterval(() => {
+            quoteEl.innerHTML = quoteArr[currentQuote];
+            currentQuote++;
+            if (currentQuote >= quoteArr.length) currentQuote = 0;
+        }, 3000);
+
+        function prevQuote() {
+            currentQuote--;
+            if (currentQuote < 0) currentQuote = quoteArr.length - 1;
+            quoteEl.innerHTML = quoteArr[currentQuote];
+        }
+
+        function nextQuote() {
+            currentQuote++;
+            if (currentQuote >= quoteArr.length) currentQuote = 0;
+            quoteEl.innerHTML = quoteArr[currentQuote];
+        }
+
+        // Modal Popup (Alert after 5s)
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                alert("🚀 Welcome to Countdown & Motivation App! Stay inspired until your big day!");
+            }, 5000);
+        });
+    </script>
+</body>
+
+</html>
