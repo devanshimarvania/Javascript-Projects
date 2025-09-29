@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Ordering System</title>
+  <link rel="stylesheet" href="./assets/CSS/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/fonts.css">
+  <style>
+    body {
+      background: #fffdf9;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .navbar {
+      background: #d62828 !important;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: #fff !important;
+    }
+
+    .btn-order {
+      background-color: #f77f00;
+      border: none;
+    }
+
+    .btn-order:hover {
+      background-color: #e76f51;
+    }
+
+    .card-img-top {
+      height: 220px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">🍴 Foodies Hub</a>
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="./addProducts.html">Manage Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="./cart.html">Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="mt-5">
+    <div class="container">
+      <div class="row" id="productList"></div>
+    </div>
+  </main>
+
+  <script src="./assets/Js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/JS/main.js"></script>
+  <script>
+    function displayCard() {
+      const productList = document.getElementById("productList");
+      if (!productList) return;
+      productList.innerHTML = "";
+      products.forEach((p) => {
+        let card = document.createElement("div");
+        card.className = "col-md-4 mb-4";
+        card.innerHTML = `
+          <div class="card h-100 shadow-sm border-0 rounded-4">
+            <img src="${p.image}" class="card-img-top" alt="${p.name}">
+            <div class="card-body">
+              <h5 class="card-title">${p.name}</h5>
+              <p><strong>Category:</strong> ${p.category}</p>
+              <p><strong>Price:</strong> ₹${p.price}</p>
+              <p><strong>Size:</strong> ${p.size}</p>
+              <p><strong>Ingredients:</strong> ${p.ingredients.join(", ")}</p>
+              <button class="btn btn-order w-100" onclick="addToCart(${p.id})">Add to Cart</button>
+              <button class="btn btn-dark w-100 mt-2" onclick="viewProduct(${p.id})">View</button>
+            </div>
+          </div>`;
+        productList.appendChild(card);
+      });
+    }
+    displayCard();
+
+    function viewProduct(id) {
+      localStorage.setItem("SelectedId", id);
+      window.location.href = "./viewProducts.html";
+    }
+  </script>
+</body>
+
+</html>

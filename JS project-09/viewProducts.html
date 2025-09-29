@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Details</title>
+  <link rel="stylesheet" href="./assets/CSS/bootstrap.min.css">
+  <style>
+    body {
+      background: #fffdf9;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-danger">
+    <div class="container">
+      <a class="navbar-brand text-white fw-bold" href="#">🍴 Foodies Hub</a>
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link text-white" href="./index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="./addProducts.html">Manage Menu</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="./cart.html">Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="py-5">
+    <div class="container">
+      <div class="row" id="View_Product"></div>
+    </div>
+  </main>
+  <script src="./assets/Js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/JS/main.js"></script>
+  <script>
+    const View_Product = document.getElementById("View_Product");
+    const selectedId = localStorage.getItem("SelectedId");
+    if (selectedId) {
+      const product = products.find(p => p.id == selectedId);
+      if (product) {
+        View_Product.innerHTML = `
+          <div class="col-md-6">
+            <img src="${product.image}" alt="${product.name}">
+          </div>
+          <div class="col-md-6">
+            <h2>${product.name}</h2>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>Price:</strong> ₹${product.price}</p>
+            <p><strong>Size:</strong> ${product.size}</p>
+            <p><strong>Ingredients:</strong> ${product.ingredients.join(", ")}</p>
+            <p><strong>Stock:</strong> ${product.stock}</p>
+            <button class="btn btn-warning" onclick="addToCart(${product.id})">Add to Cart</button>
+          </div>`;
+      }
+    }
+  </script>
+</body>
+
+</html>

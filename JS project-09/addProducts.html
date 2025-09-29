@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Menu</title>
+  <link rel="stylesheet" href="./assets/CSS/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/fonts.css">
+  <style>
+    body {
+      background: #fffdf9;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .navbar {
+      background: #d62828 !important;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: #fff !important;
+    }
+
+    .card-header {
+      background: #f77f00 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">🍴 Foodies Hub</a>
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="./cart.html">Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Add Form -->
+    <section>
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+              <div class="card-header text-white rounded-top-4">
+                <h4 class="mb-0">➕ Add Food Item</h4>
+              </div>
+              <div class="card-body p-4">
+                <form class="row g-3" id="Form">
+                  <div class="col-md-4">
+                    <label class="form-label">Food ID</label>
+                    <input type="number" class="form-control" id="productId" required>
+                  </div>
+                  <div class="col-md-4">
+                    <labelclass="form-label">Food Name</label>
+                      <input type="text" class="form-control" id="productName" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Price (₹)</label>
+                    <input type="number" class="form-control" id="price" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Size/Option</label>
+                    <input type="text" class="form-control" id="size" placeholder="Small / Medium / Large" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Category</label>
+                    <select id="category" class="form-select" required>
+                      <option disabled selected>Choose...</option>
+                      <option>Pizza</option>
+                      <option>Burger</option>
+                      <option>Drinks</option>
+                      <option>Dessert</option>
+                      <option>Main Course</option>
+                      <option>Snacks</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label">Ingredients (comma separated)</label>
+                    <input type="text" class="form-control" id="ingredients" placeholder="Cheese, Tomato, Basil"
+                      required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Stock</label>
+                    <input type="number" class="form-control" id="stock" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Image URL</label>
+                    <input type="text" class="form-control" id="image" required>
+                  </div>
+                  <div class="col-12 text-end">
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                    <button type="submit" class="btn btn-dark">Add Food</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="d-flex justify-content-center">
+      <table class="table table-bordered border-dark w-75 text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>Sr No.</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Size</th>
+            <th>Ingredients</th>
+            <th>Stock</th>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="productTable"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="./assets/Js/bootstrap.bundle.js"></script>
+  <script src="./assets/Js/main.js"></script>
+  <script>
+    viewProducts();
+    document.getElementById("Form").addEventListener("submit", addProduct);
+  </script>
+</body>
+
+</html>
