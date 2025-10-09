@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API</title>
+</head>
+<body>
+    <h1>Check Weather</h1>
+    <label for="">Latitude</label>
+    <input type="text" id="lat" placeholder="E.g. 21.2651204">
+    <br>
+    <br>
+    <label for="">Longitude</label>
+    <input type="text" id="lon" placeholder="E.g. 72.8499128">
+    <button id="weatherBtn">Get Weather</button>
+    <p id="weatherResult"></p>
+    <script>
+        document.getElementById("weatherBtn").addEventListener("click", (e) => {
+            e.preventDefault();
+            const lat = document.getElementById("lat").value.trim();
+            const lon = document.getElementById("lon").value.trim();
+            if(!lat || !lon){
+                alert("Please filled up the latitude and longitude!!!");
+                return;
+            }
+            getWeather(lat,lon);
+        });
+        async function getWeather(lat, lon){
+            const apiKey = "57edeb829d524a87fa7c61e8c56dcafb";
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+            try {
+                const res = await fetch(url);
+                const data =  await res.json();
+                console.log(data);
+                document.getElementById("weatherResult").innerHTML = `
+                    <h2>Weather Report for : ${data.name}</h2>
+                    <p>Country : ${data.sys.country}</p>
+                    <p>Humidity : ${data.main.humidity}%</p>
+                    <p>Temparture : ${data.main.temp}°C</p>
+                    <p>Description : ${data.weather[0].description}</p>
+                    <p>Speed : ${data.wind.speed} m/s</p>
+                `;
+            } catch (err) {
+                console.error("Error in Fetching data from API", err);
+            }
+        }
+    </script>
+</body>
+</html>
